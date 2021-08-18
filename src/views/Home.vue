@@ -1,27 +1,32 @@
 <template>
   <v-container class="home">
-    <h1 class="red-shadow text-center">Owl Dictionary</h1>
-    <form class="input-box" @submit.prevent="meaning">
-      <input placeholder="search for a word..." v-model="word" />
+    <h1 class="text-white-with-red-shadow">Owl Dictionary</h1>
+    <div class="input-box">
+      <input
+        type="text"
+        placeholder="Search for a word..."
+        v-model="word"
+        @keypress.enter="meaning"
+      />
       <v-btn
-        color="#fe1292"
         tile
-        height="60"
-        width="60"
-        type="submit"
+        color="#FE1292"
+        height="50"
+        width="50"
         :loading="load"
+        @click="meaning"
       >
-        <v-icon color="#fff">mdi-magnify</v-icon>
+        <v-icon color="#FFF">mdi-magnify</v-icon>
       </v-btn>
-    </form>
-    <p class="red-shadow text-center">
-      made by
-      <a class="link" target="_blank" href="https://github.com/mRiloB"
-        >@mRiloB</a
-      >
-      with the
-      <a class="link" target="_blank" href="https://owlbot.info/">Owlbot API</a>
-    </p>
+    </div>
+    <footer>
+      <p>
+        made by
+        <a href="https://github.com/mRiloB" target="_blank">@mRiloB</a>
+        with the
+        <a href="https://owlbot.info/" target="_blank">Owlbot API</a>
+      </p>
+    </footer>
   </v-container>
 </template>
 
@@ -36,16 +41,14 @@ export default {
   }),
   methods: {
     async meaning() {
-      if (!this.word.trim()) return;
-      this.load = true;
+      const word = this.word.trim();
+      if (!word) return;
       try {
+        this.load = true;
         const res = await this.search_word();
-        this.$router.push({
-          name: "meaning",
-          params: { data: res },
-        });
+        this.$router.push({ name: "meaning", params: { word_data: res } });
       } catch (err) {
-        console.log(err);
+        console.log(err.message || err);
       } finally {
         this.load = false;
       }
@@ -66,46 +69,61 @@ export default {
 
 <style lang="scss" scoped>
 .home {
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
-  height: 100%;
+  align-items: stretch;
 }
 
-.link {
+h1,
+input,
+input::placeholder {
   color: #fff;
-  text-decoration: none;
+  font-weight: bold;
 }
-.link:active {
-  color: #fff;
+
+.text-white-with-red-shadow {
+  text-shadow: 0 4px 1px #fe1292;
 }
-.link:hover {
-  text-decoration: underline;
+
+h1 {
+  text-align: center;
 }
 
 .input-box {
+  max-width: 400px;
+  margin: 0 auto;
   display: flex;
-  flex-direction: row;
   justify-content: center;
   align-items: center;
   input {
-    border: 1px solid #fe1292;
-    height: 60px;
-    padding: 0 10px;
+    border: none;
+    border-top: 2px solid #fe1292;
+    border-bottom: 2px solid #fe1292;
+    border-left: 2px solid #fe1292;
+    height: 50.5px;
+    width: 100%;
+    padding: 0 5px;
     outline: 0;
-    width: 240px;
-  }
-
-  input,
-  input::placeholder {
-    font-weight: bold;
-    color: #fff;
   }
 }
 
-.red-shadow {
-  color: #fff;
-  text-shadow: 0px 4px 4px #fe1292;
+footer {
+  p,
+  a,
+  a:active {
+    color: rgba(255, 255, 255, 0.3);
+    font-weight: bold;
+    text-align: center;
+  }
+
+  a {
+    text-decoration: none;
+  }
+
+  a:hover {
+    text-decoration: underline;
+  }
 }
 </style>
