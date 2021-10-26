@@ -1,6 +1,6 @@
 # owl-dictionary
 visit demo:
-[Owl Dictionary](https://owl-dictionary.netlify.app/)
+[Owl Dictionary](https://vue-dictionary.netlify.app/)
 
 ## Project setup
 ```
