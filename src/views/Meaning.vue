@@ -64,6 +64,7 @@ export default {
     box-shadow: 4px 4px 1px #fe1292;
     background: #fff;
     margin-bottom: 15px;
+    font-weight: 500;
   }
 }
 </style>

@@ -32,6 +32,7 @@
 
 <script>
 import axios from "axios";
+import Swal from "sweetalert2";
 
 export default {
   name: "Home",
@@ -40,7 +41,7 @@ export default {
     load: false,
     insta: "https://www.instagram.com/mbeni.wav/",
     git: "https://github.com/mRiloB",
-    owlbot: "https://owlbot.info/"
+    owlbot: "https://owlbot.info/",
   }),
   methods: {
     async meaning() {
@@ -51,7 +52,15 @@ export default {
         const res = await this.search_word();
         this.$router.push({ name: "meaning", params: { word_data: res } });
       } catch (err) {
-        console.log(err.message || err);
+        const message = err.response.data[0].message;
+        const errMsg = err.message || err;
+        Swal.fire({
+          title: "Oops!",
+          text: message || errMsg,
+          icon: "warning",
+          confirmButtonText: "Try again",
+          confirmButtonColor: "#FE1292"
+        });
       } finally {
         this.load = false;
       }
