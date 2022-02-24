@@ -22,9 +22,9 @@
     <footer>
       <p>
         made by
-        <a href="https://github.com/mRiloB" target="_blank">@mRiloB</a>
+        <a :href="insta" target="_blank">Murilo B.</a>
         with the
-        <a href="https://owlbot.info/" target="_blank">Owlbot API</a>
+        <a :href="owlbot" target="_blank">Owlbot API</a>
       </p>
     </footer>
   </v-container>
@@ -38,6 +38,9 @@ export default {
   data: () => ({
     word: "",
     load: false,
+    insta: "https://www.instagram.com/mbeni.wav/",
+    git: "https://github.com/mRiloB",
+    owlbot: "https://owlbot.info/"
   }),
   methods: {
     async meaning() {
